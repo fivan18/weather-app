@@ -13,7 +13,13 @@
   </head>
   <body>
     <div id="content" class="container-fluid p-0 m-0">
-      <pre></pre>
+      <div class="search-bar">
+        <form action="#">
+          <input type="search" id="address-input" placeholder="Enter location..." />
+          <input type="submit" value="Search" onclick="searchLocation()">
+        </form>
+      </div>
+      <pre class="location"></pre>
     </div>
     <script src="main.js"></script>
   </body>

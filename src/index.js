@@ -6,6 +6,8 @@ import {
   setEventHandler,
 } from './domManipulation';
 
+import places from 'places.js';
+
 //api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}
 async function weatherByLocation(cityName, state, countryCode) {
   const response = await fetch(
@@ -30,16 +32,34 @@ async function weatherInfo(cityName, state='', countryCode='') {
   return null;
 }
 
-async function run(location) {
+async function displayLocation(location) {
+  console.log('here');
   const myInfo = await weatherInfo(location);
-  const element = getElement(document, '#content pre');
+  const element = getElement(document, '.location');
   if(myInfo){
     render(element, JSON.stringify(myInfo, undefined, 2));
   } else {
     render(element, 'try again please, it was a problem');
   }
 }
- run('mexico');
+
+const placesAutocomplete = places({
+  appId: 'plL4SFNNP1KW',
+  apiKey: '7d4926f92add4f1f57e13f1f5280b1f1',
+  container: getElement(document, '#address-input')
+});
+
+window.searchLocation = () => {
+  const input = getElement(document, '#address-input').value;
+  if (input === '') {
+    console.log('Enter location');
+  } else {
+    displayLocation(input);
+  }
+}
+
+
+
 
 
 

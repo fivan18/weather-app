@@ -59,10 +59,11 @@ window.imgLoaded = () => {
 async function displayLocation(location) {
   const infoContainer = dom.getElement(document, '.info-container');
   infoContainer.style.display = 'none';
-  dom.getElement(document, '.loader').style.display = 'block';
+  const loader = dom.getElement(document, '.loader');
+  loader.style.display = 'block';
 
   const info = await weatherInfo(location);
-  if(info){
+  if(info && info.cod === 200){
     const giphyUrl = await giphyURL(info.weather[0].description);
     if(giphyUrl){
       dom.getElement(document, '.giphy').src = giphyUrl;
@@ -90,7 +91,13 @@ async function displayLocation(location) {
       `);
     } 
   } else {
-    dom.render(element, 'try again please, it was a problem');
+    dom.render(infoContainer, `
+      <div style="width:100; text-transform:uppercase; text-align:center; margin: 30px;">
+        ${info.message}
+      </div>
+    `);
+    infoContainer.style.display = 'block';
+    loader.style.display = 'none';
   }
 }
 

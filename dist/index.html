@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/dfacbdbf36.js" crossorigin="anonymous"></script>
-    
     <title>Weather App</title>
   </head>
   <body>
-    <div id="content" class="container-fluid p-0 m-0">
+    <div id="content" class="container-fluid">
       <div class="search-bar">
-        <form action="#">
-          <input type="search" id="address-input" placeholder="Enter location..." />
-          <input type="submit" value="Search" onclick="searchLocation()">
-        </form>
+        <input type="search" id="address-input" placeholder="Enter location..." 
+          onkeyup="searchLocation(event)" />
       </div>
-      <pre class="location"></pre>
+      <div class="weather-info">
+        <div class="info-container"></div>
+        <div class="loader" style="display: none;"></div>
+      </div>
+      <img class="giphy" onload="imgLoaded()" src="https://media1.giphy.com/media/GwGXoeb0gm7sc/giphy.gif?cid=7f5c7f1d4826871aaef7e5a619dfe26bc9b7e13fe362a7e9&rid=giphy.gif" alt="Weather Image">
     </div>
     <script src="main.js"></script>
   </body>

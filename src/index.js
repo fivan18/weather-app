@@ -1,5 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['^places.js$'] }] */
-import places from 'places.js';
 import dom from './domManipulation';
 import layouts from './layouts';
 
@@ -125,7 +123,9 @@ window.searchLocation = (event) => {
 };
 
 /* ************************* Algolia API config ************************* */
-window.placesAutocomplete = places({
+const places = require('places.js');
+
+const placesAutocomplete = places({ // eslint-disable-line no-unused-vars
   appId: 'plL4SFNNP1KW',
   apiKey: '7d4926f92add4f1f57e13f1f5280b1f1',
   container: dom.getElement(document, '#address-input'),

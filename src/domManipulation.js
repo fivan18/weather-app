@@ -1,4 +1,4 @@
-const dom = (function dom() {
+const dom = (() => {
   function append(element, content) {
     element.insertAdjacentHTML('beforeend', content);
   }
@@ -38,7 +38,7 @@ const dom = (function dom() {
     removeClass,
     setEventHandler,
   };
-}());
+})();
 
 
 export default dom;

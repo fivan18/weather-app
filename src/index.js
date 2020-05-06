@@ -1,4 +1,5 @@
 import dom from './domManipulation';
+import layouts from './layouts';
 
 import places from 'places.js';
 
@@ -91,39 +92,10 @@ async function displayLocation(location) {
     const giphyUrl = await giphyURL(info.weather[0].description);
     if(giphyUrl){
       dom.getElement(document, '.giphy').src = giphyUrl;
-      dom.render(infoContainer, `
-        <div class="main-info d-flex">
-          <div class="location">${info.name}</div>
-          <div class="temperature text-center"><span class="f-c">${
-            parseInt(info.main.temp, 10)
-          }</span><span class="degrees"> °F</span></div>
-        </div>
-        <div class="complementary-info d-flex">
-          <div class="remainder-info">
-            <ul>
-              <li style="text-transform: uppercase;">${info.weather[0].description}</li>
-              <li>Feels like: <span class="f-c">${
-                parseInt(info.main.feels_like, 10)
-              }</span><span class="degrees"> °F</span></li>
-              <li>Presure: ${info.main.pressure} hPa</li>
-              <li>Humidity: ${info.main.humidity} %</li>
-            </ul>
-          </div>
-          <div class="toggle-temperature text-center">
-            <label class="switch">
-              <input type="checkbox" onclick="changeDegrees(this)">
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-      `);
+      dom.render(infoContainer, layouts.mainContent(info));
     } 
   } else {
-    dom.render(infoContainer, `
-      <div style="width:100; text-transform:uppercase; text-align:center; margin: 30px;">
-        ${info.message}
-      </div>
-    `);
+    dom.render(infoContainer, layouts.message(info.message));
     infoContainer.style.display = 'block';
     loader.style.display = 'none';
   }
@@ -141,7 +113,7 @@ window.searchLocation = (event) => {
   if (event.keyCode === 13) {
     const input = event.target.value;
     if (input === '') {
-      console.log('Enter location');
+      dom.render(dom.getElement(document, '.info-container'), layouts.message('Enter location'));
     } else {
       displayLocation(input);
     }

@@ -123,6 +123,7 @@ window.searchLocation = (event) => {
 };
 
 /* ************************* Algolia API config ************************* */
+/* eslint import/no-unresolved: [2, { ignore: ['^places.js$'] }] */
 const places = require('places.js');
 
 const placesAutocomplete = places({ // eslint-disable-line no-unused-vars

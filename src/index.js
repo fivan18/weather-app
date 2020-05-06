@@ -50,15 +50,37 @@ async function weatherInfo(cityName, state='', countryCode='') {
       return null;
   }
 }
-
 /* ************************* Asynchronous Display ************************* */
+async function displayLocation(location) {
+  const infoContainer = dom.getElement(document, '.info-container');
+  infoContainer.style.display = 'none';
+  const loader = dom.getElement(document, '.loader');
+  loader.style.display = 'block';
+
+  const info = await weatherInfo(location);
+  if(info && info.cod === 200){
+    const giphyUrl = await giphyURL(info.weather[0].description);
+    if(giphyUrl){
+      dom.getElement(document, '.giphy').src = giphyUrl;
+      dom.render(infoContainer, layouts.mainContent(info));
+    } 
+  } else {
+    dom.render(infoContainer, layouts.message(info.message));
+    infoContainer.style.display = 'block';
+    loader.style.display = 'none';
+  }
+}
+
+/* ************************* Helper Functions ************************* */
+const fahrenheitToCelsius = (value) => ((Math.round((value - 32) * 5.0/9.0)*100)/100).toString();
+const celsiusToFahrenheit = (value) => ((Math.round((value * 9/5) + 32)*100)/100).toString();
+
+/* ************************* Handlers ************************* */
 window.imgLoaded = () => {
   dom.getElement(document, '.loader').style.display = 'none';
   dom.getElement(document, '.info-container').style.display = 'block';
 }
 
-const fahrenheitToCelsius = (value) => ((Math.round((value - 32) * 5.0/9.0)*100)/100).toString();
-const celsiusToFahrenheit = (value) => ((Math.round((value * 9/5) + 32)*100)/100).toString();
 window.changeDegrees = (checkbox) => {
   let callback;
   let symbol;
@@ -81,34 +103,6 @@ window.changeDegrees = (checkbox) => {
   });
 }
 
-async function displayLocation(location) {
-  const infoContainer = dom.getElement(document, '.info-container');
-  infoContainer.style.display = 'none';
-  const loader = dom.getElement(document, '.loader');
-  loader.style.display = 'block';
-
-  const info = await weatherInfo(location);
-  if(info && info.cod === 200){
-    const giphyUrl = await giphyURL(info.weather[0].description);
-    if(giphyUrl){
-      dom.getElement(document, '.giphy').src = giphyUrl;
-      dom.render(infoContainer, layouts.mainContent(info));
-    } 
-  } else {
-    dom.render(infoContainer, layouts.message(info.message));
-    infoContainer.style.display = 'block';
-    loader.style.display = 'none';
-  }
-}
-
-/* ************************* Algolia API config ************************* */
-const placesAutocomplete = places({
-  appId: 'plL4SFNNP1KW',
-  apiKey: '7d4926f92add4f1f57e13f1f5280b1f1',
-  container: dom.getElement(document, '#address-input')
-});
-
-/* ************************* Search Handler ************************* */
 window.searchLocation = (event) => {
   if (event.keyCode === 13) {
     const input = event.target.value;
@@ -119,6 +113,13 @@ window.searchLocation = (event) => {
     }
   }
 }
+
+/* ************************* Algolia API config ************************* */
+const placesAutocomplete = places({
+  appId: 'plL4SFNNP1KW',
+  apiKey: '7d4926f92add4f1f57e13f1f5280b1f1',
+  container: dom.getElement(document, '#address-input')
+});
 
 
 

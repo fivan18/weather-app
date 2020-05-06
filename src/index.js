@@ -123,7 +123,7 @@ window.searchLocation = (event) => {
 };
 
 /* ************************* Algolia API config ************************* */
-const places = require('places.js');
+const places = require('../node_modules/places.js/index');
 
 const placesAutocomplete = places({ // eslint-disable-line no-unused-vars
   appId: 'plL4SFNNP1KW',

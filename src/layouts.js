@@ -4,16 +4,16 @@ const layouts = (() => {
       <div class="main-info d-flex">
         <div class="location">${info.name}</div>
         <div class="temperature text-center"><span class="f-c">${
-          parseInt(info.main.temp, 10)
-        }</span><span class="degrees"> °F</span></div>
+  parseInt(info.main.temp, 10)
+  }</span><span class="degrees"> °F</span></div>
       </div>
       <div class="complementary-info d-flex">
         <div class="remainder-info">
           <ul>
             <li style="text-transform: uppercase;">${info.weather[0].description}</li>
             <li>Feels like: <span class="f-c">${
-              parseInt(info.main.feels_like, 10)
-            }</span><span class="degrees"> °F</span></li>
+  parseInt(info.main.feels_like, 10)
+  }</span><span class="degrees"> °F</span></li>
             <li>Presure: ${info.main.pressure} hPa</li>
             <li>Humidity: ${info.main.humidity} %</li>
           </ul>
@@ -38,7 +38,7 @@ const layouts = (() => {
 
   return {
     mainContent,
-    message
+    message,
   };
 })();
 

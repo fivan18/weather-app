@@ -31,7 +31,7 @@ async function giphyURL(words) {
 //api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}
 async function weatherByLocation(cityName, state, countryCode) {
   const response = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${cityName},${state},${countryCode}&APPID=d5d0c9ec7a44a11236e82cf90384711a`,
+    `http://api.openweathermap.org/data/2.5/weather?q=${cityName},${state},${countryCode}&APPID=d5d0c9ec7a44a11236e82cf90384711a&units=imperial`,
     { mode: 'cors' });
   return await response.json();
 }
@@ -56,6 +56,30 @@ window.imgLoaded = () => {
   dom.getElement(document, '.info-container').style.display = 'block';
 }
 
+const fahrenheitToCelsius = (value) => ((Math.round((value - 32) * 5.0/9.0)*100)/100).toString();
+const celsiusToFahrenheit = (value) => ((Math.round((value * 9/5) + 32)*100)/100).toString();
+window.changeDegrees = (checkbox) => {
+  let callback;
+  let symbol;
+  if(checkbox.checked) {
+    callback = fahrenheitToCelsius;
+    symbol = ' °C';
+  } else {
+    callback = celsiusToFahrenheit;
+    symbol = ' °F';
+  }
+
+  const degrees = dom.getElements(document, '.f-c');
+  const degreesSymbols = dom.getElements(document, '.degrees');
+  degrees.forEach((degree) => {
+    let value = parseFloat(degree.textContent);
+    degree.textContent = callback(value);
+  });
+  degreesSymbols.forEach((degreesSymbol) => {
+    degreesSymbol.textContent = symbol;
+  });
+}
+
 async function displayLocation(location) {
   const infoContainer = dom.getElement(document, '.info-container');
   infoContainer.style.display = 'none';
@@ -70,20 +94,24 @@ async function displayLocation(location) {
       dom.render(infoContainer, `
         <div class="main-info d-flex">
           <div class="location">${info.name}</div>
-          <div class="temperature text-center">${info.main.temp} °F</div>
+          <div class="temperature text-center"><span class="f-c">${
+            parseInt(info.main.temp, 10)
+          }</span><span class="degrees"> °F</span></div>
         </div>
         <div class="complementary-info d-flex">
           <div class="remainder-info">
             <ul>
               <li style="text-transform: uppercase;">${info.weather[0].description}</li>
-              <li>Feels like: <span>${info.main.feels_like} °F</span></li>
+              <li>Feels like: <span class="f-c">${
+                parseInt(info.main.feels_like, 10)
+              }</span><span class="degrees"> °F</span></li>
               <li>Presure: ${info.main.pressure} hPa</li>
               <li>Humidity: ${info.main.humidity} %</li>
             </ul>
           </div>
           <div class="toggle-temperature text-center">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onclick="changeDegrees(this)">
               <span class="slider round"></span>
             </label>
           </div>

@@ -11,6 +11,10 @@ const dom = (function dom() {
     return element.querySelector(target);
   }
 
+  function getElements(element, target) {
+    return [...element.querySelectorAll(target)];
+  }
+
   function addClass(element, theClass) {
     element.classList.add(theClass);
   }
@@ -29,6 +33,7 @@ const dom = (function dom() {
     append,
     render,
     getElement,
+    getElements,
     addClass,
     removeClass,
     setEventHandler,

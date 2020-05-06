@@ -1,3 +1,4 @@
+/* eslint import/no-unresolved: [2, { ignore: ['^places.js$'] }] */
 import places from 'places.js';
 import dom from './domManipulation';
 import layouts from './layouts';

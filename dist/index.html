@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Weather App</title>
+  </head>
+  <body>
+    <div id="content" class="container-fluid">
+      <div class="search-bar">
+        <input type="search" id="address-input" placeholder="Enter location..." 
+          onkeyup="searchLocation(event)" />
+      </div>
+      <div class="weather-info">
+        <div class="info-container"></div>
+        <div class="loader" style="display: none;"></div>
+      </div>
+      <img class="giphy" onload="imgLoaded()" src="https://media1.giphy.com/media/GwGXoeb0gm7sc/giphy.gif?cid=7f5c7f1d4826871aaef7e5a619dfe26bc9b7e13fe362a7e9&rid=giphy.gif" alt="Weather Image">
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
